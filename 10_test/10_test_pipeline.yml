@@ -22,5 +22,5 @@ stages:
     steps:
     - script: ls -la
     - checkout: self
-    - checkout: hello_world
+    - checkout: 'application-springboot'
     - script: ls -la
