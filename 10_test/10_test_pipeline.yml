@@ -12,7 +12,6 @@ resources:
     endpoint: '20220501'
     name: 'oad3/application-springboot'
 
-Public
 stages:
 - stage: stage_test
   jobs: 
