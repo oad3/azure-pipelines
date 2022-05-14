@@ -34,12 +34,9 @@ stages:
               echo "${{ parameters.BuildTag }}"
               if [ " " == "${{ parameters.BuildTag }}" ]
               then
-                  echo "Equal"
                   echo "##vso[task.logissue type=error]BuildTag is empty."
                   echo "##vso[task.complete result=Failed;]BuildTag is empty."
                   exit 1
-              else
-                  echo "Not Equal"
               fi
           # - task: Gradle@2
           #   displayName: Gradle Build and Test
