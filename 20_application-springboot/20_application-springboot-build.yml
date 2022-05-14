@@ -51,11 +51,17 @@ stages:
             inputs:
               command: login
               containerRegistry: "DockerRegistryServiceConnection"
-
+          - bash: |
+              ls -la
           - task: Docker@2
             displayName: Docker Build and Push
             inputs:
-              Dockerfile: "./application-springboot/Dockerfile"
+              Dockerfile: "./application-springboot/"
               command: buildAndPush
               repository: "oad3jp999/application-springboot"
               tags: "0.0.2"
+          - task: Docker@2
+            displayName: Logout of Docker Hub
+            inputs:
+              command: logout
+              containerRegistry: "DockerRegistryServiceConnection"
