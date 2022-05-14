@@ -34,7 +34,7 @@ stages:
               publishJUnitResults: true
               testResultsFiles: "**/TEST-*.xml"
               javaHomeOption: "path"
-              jdkDirectory: "$JAVA_HOME_11_X64"
+              jdkDirectory: "$(JAVA_HOME_11_X64)"
               sonarQubeRunAnalysis: false
               spotBugsAnalysis: false
             env:
@@ -44,6 +44,7 @@ stages:
 
       - job: DockerBuildAndPush
         displayName: DockerBuildAndPush
+        dependsOn: GradleBuildAndTest
         steps:
           - task: Docker@2
             displayName: Login to Docker Hub
