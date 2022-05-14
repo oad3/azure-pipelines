@@ -33,7 +33,8 @@ stages:
               javaHomeOption: "JDKVersion"
               sonarQubeRunAnalysis: false
               spotBugsAnalysis: false
-
+            env:
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
           - bash: |
               ls -la ./application-springboot/build/libs/
 
