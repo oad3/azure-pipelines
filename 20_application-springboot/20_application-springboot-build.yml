@@ -32,7 +32,8 @@ stages:
               tasks: "build"
               publishJUnitResults: true
               testResultsFiles: "**/TEST-*.xml"
-              javaHomeOption: "$JAVA_HOME_11_X64"
+              javaHomeOption: "path"
+              jdkDirectory: "$JAVA_HOME_11_X64"
               sonarQubeRunAnalysis: false
               spotBugsAnalysis: false
             env:
