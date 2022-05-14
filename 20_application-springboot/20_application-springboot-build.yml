@@ -31,8 +31,8 @@ stages:
           - checkout: application-springboot
           - bash: |
               echo $JAVA_HOME_11_X64
-              echo ${{ parameters.BuildTag }}
-              if [ " " == ${{ parameters.BuildTag }} ]
+              echo "${{ parameters.BuildTag }}"
+              if [ " " == "${{ parameters.BuildTag }}" ]
               then
                   echo "Equal"
                   echo "##vso[task.logissue type=error]BuildTag is empty."
@@ -40,6 +40,12 @@ stages:
                   exit 1
               else
                   echo "Not Equal"
+              fi
+              if [ -n "${{ parameters.BuildTag }}" ]; then
+                echo "not enpty"
+              fi
+              if [ -z "${{ parameters.BuildTag }}" ]; then
+                echo "enpty"
               fi
           # - task: Gradle@2
           #   displayName: Gradle Build and Test
