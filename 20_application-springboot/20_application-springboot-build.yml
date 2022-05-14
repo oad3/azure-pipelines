@@ -2,15 +2,15 @@ trigger:
   - none
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: "ubuntu-latest"
 
 resources:
   repositories:
-    - repository: 'application-springboot'
+    - repository: "application-springboot"
       type: github
       ref: main
-      endpoint: '20220501'
-      name: 'oad3/application-springboot'
+      endpoint: "20220501"
+      name: "oad3/application-springboot"
 
 stages:
   - stage: BuildAndPush
@@ -28,32 +28,33 @@ stages:
           - task: Gradle@2
             displayName: Gradle Build and Test
             inputs:
-              gradleWrapperFile: './application-springboot/gradlew'
-              workingDirectory: './application-springboot'
-              tasks: 'build test'
+              gradleWrapperFile: "./application-springboot/gradlew"
+              workingDirectory: "./application-springboot"
+              tasks: "build test"
               publishJUnitResults: true
-              testResultsFiles: '**/TEST-*.xml'
-              javaHomeOption: 'path'
-              jdkDirectory: '$JAVA_HOME_11_X64'
+              testResultsFiles: "**/TEST-*.xml"
+              javaHomeOption: "path"
+              jdkDirectory: "$JAVA_HOME_11_X64"
               sonarQubeRunAnalysis: false
               spotBugsAnalysis: false
             env:
-              SYSTEM_ACCESSTOKEN: '$(System.AccessToken)'
+              SYSTEM_ACCESSTOKEN: "$(System.AccessToken)"
           - bash: |
               ls -la ./application-springboot/build/libs/
 
       - job: DockerBuildAndPush
         displayName: DockerBuildAndPush
+        steps:
           - task: Docker@2
             displayName: Login to Docker Hub
             inputs:
               command: login
-              containerRegistry: 'DockerRegistryServiceConnection'
+              containerRegistry: "DockerRegistryServiceConnection"
 
           - task: Docker@2
             displayName: Docker Build and Push
             inputs:
-              Dockerfile: './application-springboot/Dockerfile'
+              Dockerfile: "./application-springboot/Dockerfile"
               command: buildAndPush
-              repository: 'oad3jp999/application-springboot'
+              repository: "oad3jp999/application-springboot"
               tags: "0.0.2"
