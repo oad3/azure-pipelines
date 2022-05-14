@@ -5,7 +5,7 @@ parameters:
   - name: BuildTag
     displayName: BuildTag (ex x.x.x)
     type: string
-    default: " "
+    default: ""
 
 pool:
   vmImage: "ubuntu-latest"
@@ -40,12 +40,6 @@ stages:
                   exit 1
               else
                   echo "Not Equal"
-              fi
-              if [ -n "${{ parameters.BuildTag }}" ]; then
-                echo "not enpty"
-              fi
-              if [ -z "${{ parameters.BuildTag }}" ]; then
-                echo "enpty"
               fi
           # - task: Gradle@2
           #   displayName: Gradle Build and Test
