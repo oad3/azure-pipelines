@@ -23,6 +23,8 @@ stages:
         steps:
           - checkout: self
           - checkout: "application-springboot"
+          - bash: |
+              echo $JAVA_HOME_11_X64
           - task: Gradle@2
             inputs:
               gradleWrapperFile: "./application-springboot/gradlew"
@@ -30,7 +32,7 @@ stages:
               tasks: "build"
               publishJUnitResults: true
               testResultsFiles: "**/TEST-*.xml"
-              javaHomeOption: "JDKVersion"
+              javaHomeOption: "$JAVA_HOME_11_X64"
               sonarQubeRunAnalysis: false
               spotBugsAnalysis: false
             env:
@@ -38,16 +40,17 @@ stages:
           - bash: |
               ls -la ./application-springboot/build/libs/
 
-          # - task: Docker@2
-          #   displayName: Login to Docker Hub
-          #   inputs:
-          #     command: login
+          - task: Docker@2
+            displayName: Login to Docker Hub
+            inputs:
+              command: login
+              containerRegistry: DockerRegistryServiceConnection
 
-          # - task: Docker@2
-          #   displayName: Build and Push
-          #   inputs:
-          #     Dockerfile: ./SpringBootDemo/demo/Dockerfile
-          #     command: buildAndPush
-          #     repository: oad3jp999/oad3_dockerimage_springboot_demo
-          #     tags: |
-          #       20220417_1
+          - task: Docker@2
+            displayName: Build and Push
+            inputs:
+              Dockerfile: ./application-springboot/Dockerfile
+              command: buildAndPush
+              repository: oad3jp999/application-springboot
+              tags: |
+                0.0.2
