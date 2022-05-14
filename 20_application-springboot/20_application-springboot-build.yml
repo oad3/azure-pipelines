@@ -22,7 +22,7 @@ stages:
           clean: outputs
         steps:
           - checkout: self
-          - checkout: SpringBootDemo
+          - checkout: "application-springboot"
           - task: Gradle@2
             inputs:
               gradleWrapperFile: "./application-springboot/gradlew"
