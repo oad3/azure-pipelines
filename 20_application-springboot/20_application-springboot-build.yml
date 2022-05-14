@@ -31,7 +31,8 @@ stages:
           - checkout: application-springboot
           - bash: |
               echo $JAVA_HOME_11_X64
-              if [ ' ' == ${{ parameters.BuildTag }} ]
+              echo ${{ parameters.BuildTag }}
+              if [ " " == ${{ parameters.BuildTag }} ]
               then
                   echo "Equal"
                   echo "##vso[task.logissue type=error]BuildTag is empty."
