@@ -13,10 +13,10 @@ resources:
       name: "oad3/application-springboot"
 
 stages:
-  - stage: BuildAndPush
+  - stage: BuildStage
     jobs:
-      - job: GradleBuildAndTest
-        displayName: GradleBuildAndTest
+      - job: BuildJob
+        displayName: "Gradle Build And Docker Build Push"
         continueOnError: false
         workspace:
           clean: outputs
@@ -41,18 +41,11 @@ stages:
               SYSTEM_ACCESSTOKEN: "$(System.AccessToken)"
           - bash: |
               ls -la ./application-springboot/build/libs/
-
-      - job: DockerBuildAndPush
-        displayName: DockerBuildAndPush
-        dependsOn: GradleBuildAndTest
-        steps:
           - task: Docker@2
             displayName: Login to Docker Hub
             inputs:
               command: login
               containerRegistry: "DockerRegistryServiceConnection"
-          - bash: |
-              ls -la
           - task: Docker@2
             displayName: Docker Build and Push
             inputs:
