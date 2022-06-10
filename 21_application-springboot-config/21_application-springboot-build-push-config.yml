@@ -41,39 +41,39 @@ stages:
             clean: true
           - bash: |
               echo $JAVA_HOME_11_X64
-          - task: Gradle@2
-            displayName: Gradle Build and Test
-            inputs:
-              gradleWrapperFile: "./application-springboot/gradlew"
-              workingDirectory: "./application-springboot"
-              tasks: "build test"
-              publishJUnitResults: true
-              testResultsFiles: "**/TEST-*.xml"
-              javaHomeOption: "path"
-              jdkDirectory: "$(JAVA_HOME_11_X64)"
-              sonarQubeRunAnalysis: false
-              spotBugsAnalysis: false
-            env:
-              SYSTEM_ACCESSTOKEN: "$(System.AccessToken)"
-          - bash: |
-              ls -la ./application-springboot/build/libs/
-          - task: Docker@2
-            displayName: Login to Docker Hub
-            inputs:
-              command: login
-              containerRegistry: "DockerRegistryServiceConnection"
-          - task: Docker@2
-            displayName: Docker Build and Push
-            inputs:
-              Dockerfile: "./application-springboot/Dockerfile"
-              command: buildAndPush
-              repository: "oad3jp999/application-springboot"
-              tags: "${{ parameters.BuildTag }}"
-          - task: Docker@2
-            displayName: Logout of Docker Hub
-            inputs:
-              command: logout
-              containerRegistry: "DockerRegistryServiceConnection"
+          # - task: Gradle@2
+          #   displayName: Gradle Build and Test
+          #   inputs:
+          #     gradleWrapperFile: "./application-springboot/gradlew"
+          #     workingDirectory: "./application-springboot"
+          #     tasks: "build test"
+          #     publishJUnitResults: true
+          #     testResultsFiles: "**/TEST-*.xml"
+          #     javaHomeOption: "path"
+          #     jdkDirectory: "$(JAVA_HOME_11_X64)"
+          #     sonarQubeRunAnalysis: false
+          #     spotBugsAnalysis: false
+          #   env:
+          #     SYSTEM_ACCESSTOKEN: "$(System.AccessToken)"
+          # - bash: |
+          #     ls -la ./application-springboot/build/libs/
+          # - task: Docker@2
+          #   displayName: Login to Docker Hub
+          #   inputs:
+          #     command: login
+          #     containerRegistry: "DockerRegistryServiceConnection"
+          # - task: Docker@2
+          #   displayName: Docker Build and Push
+          #   inputs:
+          #     Dockerfile: "./application-springboot/Dockerfile"
+          #     command: buildAndPush
+          #     repository: "oad3jp999/application-springboot"
+          #     tags: "${{ parameters.BuildTag }}"
+          # - task: Docker@2
+          #   displayName: Logout of Docker Hub
+          #   inputs:
+          #     command: logout
+          #     containerRegistry: "DockerRegistryServiceConnection"
           - bash: |
               cd ./application-springboot-config
               chmod 744 ./add_manifest.sh
@@ -81,4 +81,4 @@ stages:
               git add ${{ parameters.BuildTag }}
               git status
               git commit -a -m "${{ parameters.BuildTag }}"
-              git push
+              git push origin main
