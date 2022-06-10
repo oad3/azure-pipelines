@@ -93,4 +93,4 @@ stages:
               # git push origin main
               # git push -u https://ssreshta:mypassword@bitbucket.org/xyz/abcd.git HEAD:feature/2020q2
               #git push -u https://$(name):$(pass)@github.com/oad3/application-springboot-config.git HEAD:main
-              git push https://$(pass)@github.com/oad3/application-springboot-config.git
+              git push https://$(pass)@github.com/oad3/application-springboot-config.git origin HEAD:main
