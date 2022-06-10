@@ -80,6 +80,7 @@ stages:
           #     containerRegistry: "DockerRegistryServiceConnection"
           - bash: |
               cd ./application-springboot-config
+              ls -la
               chmod 744 ./add_manifest.sh
               ./add_manifest.sh -a oad3jp999\\\/application-springboot ${{ parameters.BuildTag }}
               echo email is "$(email)"
@@ -89,4 +90,4 @@ stages:
               git add ${{ parameters.BuildTag }}
               git status
               git commit -a -m "${{ parameters.BuildTag }}"
-              git push -u https://github.com/oad3/application-springboot-config.git origin main
+              git push origin main
