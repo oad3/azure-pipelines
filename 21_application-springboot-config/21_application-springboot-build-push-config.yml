@@ -33,6 +33,7 @@ stages:
           clean: outputs
         steps:
           - checkout: self
+            persistCredentials: true
             clean: true
           - checkout: application-springboot
             clean: true
