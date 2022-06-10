@@ -23,6 +23,9 @@ resources:
       endpoint: "20220501"
       name: "oad3/application-springboot-config"
 
+variables:
+  - group: variablegroup
+
 stages:
   - stage: BuildStage
     jobs:
@@ -79,8 +82,11 @@ stages:
               cd ./application-springboot-config
               chmod 744 ./add_manifest.sh
               ./add_manifest.sh -a oad3jp999\\\/application-springboot ${{ parameters.BuildTag }}
-              git config --global user.email "you@example.com"
-              git config --global user.name "Your Name"
+              echo email is "$(email)"
+              echo name is "$(name)"
+              git config --global user.email "$(email)"
+              git config --global user.name "$(name)"
+              git -c http.extraheader="AUTHORIZATION:PAT $(PAT)" push --tags
               git add ${{ parameters.BuildTag }}
               git status
               git commit -a -m "${{ parameters.BuildTag }}"
