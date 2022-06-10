@@ -79,6 +79,8 @@ stages:
               cd ./application-springboot-config
               chmod 744 ./add_manifest.sh
               ./add_manifest.sh -a oad3jp999\\\/application-springboot ${{ parameters.BuildTag }}
+              git config --global user.email "you@example.com"
+              git config --global user.name "Your Name"
               git add ${{ parameters.BuildTag }}
               git status
               git commit -a -m "${{ parameters.BuildTag }}"
