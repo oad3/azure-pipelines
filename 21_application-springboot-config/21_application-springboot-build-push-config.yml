@@ -20,7 +20,7 @@ resources:
     - repository: "application-springboot-config"
       type: github
       ref: main
-      endpoint: "20220501"
+      endpoint: "github.com_20220611"
       name: "oad3/application-springboot-config"
 
 variables:
