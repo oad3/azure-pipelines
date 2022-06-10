@@ -72,6 +72,7 @@ stages:
               containerRegistry: "DockerRegistryServiceConnection"
           - bash: |
               cd ./application-springboot-config
+              chmod 744 ./add_manifest.sh
               ./add_manifest.sh -a oad3jp999\\\/application-springboot ${{ parameters.BuildTag }}
               git add ${{ parameters.BuildTag }}
               git status
