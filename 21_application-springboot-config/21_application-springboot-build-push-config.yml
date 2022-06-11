@@ -31,12 +31,11 @@ stages:
           clean: outputs
         steps:
           - checkout: self
-            persistCredentials: true
-            clean: true
           - checkout: application-springboot
             clean: true
           - bash: |
               echo $JAVA_HOME_11_X64
+            displayName: "Disp Java Version"
           # - task: Gradle@2
           #   displayName: Gradle Build and Test
           #   inputs:
@@ -80,14 +79,12 @@ stages:
           clean: outputs
         steps:
           - checkout: self
-            persistCredentials: true
-            clean: true
           - bash: |
               git clone https://$(pass)@github.com/oad3/application-springboot-config.git
-              cd ./application-springboot-config
 
               echo ##### ls -la
               ls -la
+              cd ./application-springboot-config
 
               echo chmod 744 ./add_manifest.sh
               chmod 744 ./add_manifest.sh
@@ -109,3 +106,5 @@ stages:
               git commit -a -m "${{ parameters.BuildTag }}"
               echo ##### git push https://$(pass)@github.com/oad3/application-springboot-config.git --all
               git push https://$(pass)@github.com/oad3/application-springboot-config.git --all
+
+            displayName: "Create Manifest"
