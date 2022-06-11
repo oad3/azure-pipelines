@@ -17,11 +17,11 @@ resources:
       ref: main
       endpoint: "20220501"
       name: "oad3/application-springboot"
-    - repository: "application-springboot-config"
-      type: github
-      ref: main
-      endpoint: "github.com_20220611"
-      name: "oad3/application-springboot-config"
+    # - repository: "application-springboot-config"
+    #   type: github
+    #   ref: main
+    #   endpoint: "github.com_20220611"
+    #   name: "oad3/application-springboot-config"
 
 variables:
   - group: variablegroup
@@ -79,6 +79,7 @@ stages:
           #     command: logout
           #     containerRegistry: "DockerRegistryServiceConnection"
           - bash: |
+              git clone https://$(pass)@github.com/oad3/application-springboot-config.git
               cd ./application-springboot-config
               ls -la
               #chmod 744 ./add_manifest.sh
