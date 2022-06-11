@@ -17,11 +17,6 @@ resources:
       ref: main
       endpoint: "20220501"
       name: "oad3/application-springboot"
-    # - repository: "application-springboot-config"
-    #   type: github
-    #   ref: main
-    #   endpoint: "github.com_20220611"
-    #   name: "oad3/application-springboot-config"
 
 variables:
   - group: variablegroup
@@ -40,9 +35,6 @@ stages:
             clean: true
           - checkout: application-springboot
             clean: true
-          # - checkout: application-springboot-config
-          #   persistCredentials: true
-          #   clean: true
           - bash: |
               echo $JAVA_HOME_11_X64
           # - task: Gradle@2
@@ -78,32 +70,42 @@ stages:
           #   inputs:
           #     command: logout
           #     containerRegistry: "DockerRegistryServiceConnection"
+
+  - stage: AfterBuildStage
+    jobs:
+      - job: AfterBuildJob
+        displayName: "Create Manifest based on Build Results"
+        continueOnError: false
+        workspace:
+          clean: outputs
+        steps:
+          - checkout: self
+            persistCredentials: true
+            clean: true
           - bash: |
               git clone https://$(pass)@github.com/oad3/application-springboot-config.git
               cd ./application-springboot-config
-              ls -la
-              #chmod 744 ./add_manifest.sh
-              #./add_manifest.sh -a oad3jp999\\\/application-springboot ${{ parameters.BuildTag }}
-              #git checkout HEAD -- add_manifest.sh
 
-              echo email is "$(email)"
-              echo name is "$(name)"
+              echo ##### ls -la
+              ls -la
+
+              echo chmod 744 ./add_manifest.sh
+              chmod 744 ./add_manifest.sh
+              ./add_manifest.sh -a oad3jp999\\\/application-springboot ${{ parameters.BuildTag }}
+              echo ##### git checkout HEAD -- add_manifest.sh
+              git checkout HEAD -- add_manifest.sh
+
+              echo ##### email is "$(email)"
+              echo ##### name is "$(name)"
               git config --global user.email "$(email)"
               git config --global user.name "$(name)"
 
-              #echo git add ${{ parameters.BuildTag }}
-              #git add ${{ parameters.BuildTag }}
+              echo ##### git add ${{ parameters.BuildTag }}
+              git add ${{ parameters.BuildTag }}
 
-              echo test > test.txt
-              echo git add test.txt
-              git add test.txt
-
-              echo git status
+              echo ##### git status
               git status
-              echo commit -a -m "${{ parameters.BuildTag }}"
+              echo ##### git commit -a -m "${{ parameters.BuildTag }}"
               git commit -a -m "${{ parameters.BuildTag }}"
-              # git push origin main
-              # git push -u https://ssreshta:mypassword@bitbucket.org/xyz/abcd.git HEAD:feature/2020q2
-              #git push -u https://$(name):$(pass)@github.com/oad3/application-springboot-config.git HEAD:main
-              echo git push https://$(pass)@github.com/oad3/application-springboot-config.git --all
+              echo ##### git push https://$(pass)@github.com/oad3/application-springboot-config.git --all
               git push https://$(pass)@github.com/oad3/application-springboot-config.git --all
