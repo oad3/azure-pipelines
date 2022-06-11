@@ -40,9 +40,9 @@ stages:
             clean: true
           - checkout: application-springboot
             clean: true
-          - checkout: application-springboot-config
-            persistCredentials: true
-            clean: true
+          # - checkout: application-springboot-config
+          #   persistCredentials: true
+          #   clean: true
           - bash: |
               echo $JAVA_HOME_11_X64
           # - task: Gradle@2
