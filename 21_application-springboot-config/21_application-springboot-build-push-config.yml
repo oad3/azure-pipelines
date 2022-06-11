@@ -89,11 +89,11 @@ stages:
               ls -la
               cd ./application-springboot-config
 
-              echo chmod 744 ./add_manifest.sh
-              chmod 744 ./add_manifest.sh
-              ./add_manifest.sh -a oad3jp999\\\/application-springboot ${{ parameters.BuildTag }}
-              echo ##### git checkout HEAD -- add_manifest.sh
-              git checkout HEAD -- add_manifest.sh
+              echo chmod 744 ./shell/add_manifest.sh
+              chmod 744 ./shell/add_manifest.sh
+              ./shell/add_manifest.sh -a oad3jp999\\\/application-springboot ${{ parameters.BuildTag }}
+              echo ##### git checkout HEAD -- shell/add_manifest.sh
+              git checkout HEAD -- shell/add_manifest.sh
 
               echo ##### email is "$(email)"
               echo ##### name is "$(name)"
